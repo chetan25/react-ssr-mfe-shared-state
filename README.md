@@ -1,6 +1,6 @@
 ---
-title: Simple SSR React App with Micro Frontends.
-excerpt: Building a simple SSR react that loads different micro frontends dynamically.
+title: Simple MFE apps with shared state logic.
+excerpt: Build simple MFE and share global state along with some design patterns for building react component.
 Tools: ['Express', 'React', 'Redux', 'ReactDOM' 'Webpack']
 ---
 
