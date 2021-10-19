@@ -4,6 +4,7 @@ import { Switch, Route,  BrowserRouter as Router, Redirect  } from 'react-router
 import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
 
 import LoginPage from './pages/login';
+// import LoginPage from './pages/login-machine';
 import ContainerApp from './container';
 import { useGlobalSharedContextValue } from './global-context';
 
