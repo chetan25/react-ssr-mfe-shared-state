@@ -14,26 +14,12 @@ const generateClassName = createGenerateClassName({
 });
 
 // @ts-ignore
-window['React'] = React;
+// window['React'] = React;
 
 const ShellApp = () => {
   const globalState = useGlobalSharedContextValue();
-  console.log(globalState.user);
+  console.log(globalState, 'globalState');
   
-  const test = async () => {
-    console.log('3433434');
-    // @ts-ignore
-    // import(/* webpackIgnore: true */ 'http://127.0.0.1:8080/main.js').then(thing => {
-    //   console.log(thing);
-    //   const fn = thing.myThing;
-    //   console.log(thing.myThing());
-    // })
-    // const th = await import(/* webpackIgnore: true */ 'http://127.0.0.1:8080/main.js');
-    // // @ts-ignore
-    // console.log(th.default())
-  }
-
-  test();
   return (
     <Suspense fallback='loading....'>
        <StylesProvider generateClassName={generateClassName}>

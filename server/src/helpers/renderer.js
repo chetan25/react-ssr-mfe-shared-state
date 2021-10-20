@@ -10,9 +10,9 @@ export default (req, store) => {
     console.log(session, 'session');
     const session = {
         "remoteJs": {
-            "nav": "http://localhost:3002/remoteEntry.js",
-            "home": "http://localhost:3003/remoteEntry.js",
-            "about": "http://localhost:3005/remoteEntry.js"
+            "nav": "http://localhost:3002",
+            "home": "http://localhost:3003",
+            "about": "http://localhost:3005"
         }
     };
     
