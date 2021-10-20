@@ -1,5 +1,6 @@
 import { createMachine, assign, Interpreter } from 'xstate';
 
+
 export type InputInsacne<T> = Interpreter<InputContext<T>, InputStateSchema<T>, InputEvent<T>>;
 
 export interface InputContext<T> {
@@ -19,6 +20,18 @@ type InputStateSchema<T> =
 | {
     value: 'onSubmit';
     context: InputContext<T>
+} | {
+    value: 'onSubmit.submitting';
+    context: InputContext<T>
+} | {
+    value: 'onSubmit.success';
+    context: InputContext<T>
+} | {
+    value: 'onSubmit.failure';
+    context: InputContext<T>
+} | {
+    value: 'success.done';
+    context: InputContext<T>
 };  
   
 type InputEvent<T> = 
@@ -33,9 +46,6 @@ type InputEvent<T> =
     type: 'ON_SUBMIT'
 };
 
-// const nameValid = <T extends string>(value: T) => {
-//     return value && value.length > 1 ? true : false;
-// }
 
 const updatInputValue = assign<InputContext<any>, any>({
     value: (_: any, event: { value: any; }) => {
@@ -59,6 +69,7 @@ const submitUser = <T>(value: T) => {
         body: JSON.stringify({name: value})
     });
 }
+
 
 export const createLoginMachine = <T>(id: string, initialState: string, initialContextValue: T) => {
     return createMachine<InputContext<T>, InputEvent<T>, InputStateSchema<T>>({
@@ -98,7 +109,7 @@ export const createLoginMachine = <T>(id: string, initialState: string, initialC
                             src: (context) => submitUser<T>(context.value as T),
                             onDone: {
                               target: 'success',
-                            //   actions: assign({ user: (context, event) => event.data })
+                              actions: 'updateGlobalState'
                             },
                             onError: {
                               target: 'failure',
@@ -106,9 +117,7 @@ export const createLoginMachine = <T>(id: string, initialState: string, initialC
                             }
                         }
                     },
-                    success: {
-                        type: 'final'
-                    },
+                    success: { },
                     failure: {
                         on: {
                             ON_RETRY: 'submitting'
@@ -126,7 +135,8 @@ export const createLoginMachine = <T>(id: string, initialState: string, initialC
     }, {
         actions: {
             updatInputValue: updatInputValue,
-            checkInputState: checkInputState
+            checkInputState: checkInputState,
+            // updateGlobalState: updateGlobalState
         },
         guards: {
             // can provide default implementatin here

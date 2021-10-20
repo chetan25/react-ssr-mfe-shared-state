@@ -3,8 +3,8 @@ import React, {Suspense} from 'react';
 import { Switch, Route,  BrowserRouter as Router, Redirect  } from 'react-router-dom';
 import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
 
-import LoginPage from './pages/login';
-// import LoginPage from './pages/login-machine';
+// import LoginPage from './pages/login';
+import LoginPage from './pages/login-machine';
 import ContainerApp from './container';
 import { useGlobalSharedContextValue } from './global-context';
 

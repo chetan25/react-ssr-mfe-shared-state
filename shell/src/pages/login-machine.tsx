@@ -6,6 +6,11 @@ import Button from '@material-ui/core/Button';
 // import { useHistory } from "react-router-dom";
 import {createLoginMachine} from '../state-machines/login-machine';
 import { useMachine} from '@xstate/react';
+import {
+    Redirect,
+  } from "react-router-dom"
+
+import { useGlobalSharedContextUpdate, useGlobalSharedContextValue } from '../global-context';
 
 const useStyles = makeStyles(() => ({
     login: {
@@ -24,12 +29,33 @@ const useStyles = makeStyles(() => ({
 
 const LoginPage = () => {
     const classes = useStyles();
+    const setGlobalState = useGlobalSharedContextUpdate();
+        const globalState = useGlobalSharedContextValue();
     // const history = useHistory();
+
+    const updateGlobalState = (context: any) => {
+        console.log(context.value);
+        setGlobalState({
+            ...globalState,
+            user: {
+                name: context.value
+            },
+        })
+    };
 
     // create a new instance for the email Input State machine
     const loginMachine = createLoginMachine<string>('name', 'idle', '');
-    const [state, send] = useMachine(loginMachine);
+    const [state, send] = useMachine(loginMachine, {
+        // services: {
+        //     //@ts-ignore
+        //     updateGlobalState: (context: any) => updateGlobalState(context)
+        // }
+        actions: {
+            updateGlobalState: updateGlobalState
+        }
+    });
    
+    
     console.log(state.value);
     console.log(state.context);
     // const {
@@ -82,6 +108,12 @@ const LoginPage = () => {
                 onChange={handleNameChange}
             />
             <Button variant="contained" onClick={handleFormSubmit}>Start</Button>
+            {
+                state.matches('onSubmit.submitting') ? <div>Submitting....</div> : null
+            }
+            {
+                state.matches('onSubmit.success') ?  <Redirect to="/home"/> : null
+            }
         </form>
     )
 }
