@@ -2,7 +2,6 @@
 import React, { lazy} from 'react';
 import {Route } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
-// import { useHistory } from "react-router-dom";
 
 const SideBar = lazy(() => import("nav/SideBar"));
 const PageHeader = lazy(() => import("nav/PageHeader"));
@@ -39,7 +38,7 @@ const useStyles = makeStyles(() => ({
 const ContainerApp = () => {
 //   const localHistory = useHistory();
   const classes = useStyles();
-  
+
   return (
         <div className={classes.container}>
             <div className={classes.header}><PageHeader /></div>
@@ -48,7 +47,7 @@ const ContainerApp = () => {
                 <Route exact path='/about'>
                     <AboutApp />
                 </Route>
-                <Route exact path='/home'>
+                <Route path='/home'>
                     <HomeApp />
                 </Route>
             </main>

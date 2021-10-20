@@ -5,7 +5,8 @@ export interface SharedContextType {
   user: {
       name: string;
   },
-  remoteJs: Record<string, string>
+  remoteJs: Record<string, string>;
+  appRoutes: Record<string, Record<string, string>>
 }
 
 const SharedContext = createContext<[SharedContextType, Dispatch<SharedContextType>] | null>(null);

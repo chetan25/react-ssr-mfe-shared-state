@@ -6,6 +6,10 @@ const packageJson = require('../package.json');
 const path = require("path"); 
 const devConfig = {
     mode: 'development',
+    entry: {
+        main: './src/index.js',// no use for us
+        homeAppRoutes: './src/exposeRoutes.js'
+    },
     output: {
         publicPath: 'http://localhost:3003/'
     },
@@ -44,7 +48,7 @@ const devConfig = {
             filename: 'remoteEntry.js',
             remotes: {},
             exposes: {
-                './HomeApp': './src/Home'
+                './HomeApp': './src/app'
             },
             shared: { 
                 react: { singleton: true, eager: true }, 
