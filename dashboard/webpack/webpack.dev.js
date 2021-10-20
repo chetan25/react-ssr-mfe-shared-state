@@ -1,20 +1,21 @@
 const { merge } = require("webpack-merge");
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const baseConfig = require("./webpack.base");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const packageJson = require("../package.json");
 const path = require("path");
-// const ExternalTemplateRemotesPlugin = require('./ExternalTemplateRemotesPlugin');
-const webpack = require("webpack");
 const devConfig = {
   mode: "development",
+  entry: {
+    main: "./src/index.js", // no use for us
+    dashboardAppRoutes: "./src/exposeRoutes.js",
+  },
   output: {
-    filename: "bundle.js",
-    publicPath: "http://localhost:3001/",
+    publicPath: "http://localhost:3006/",
   },
   devtool: "source-map",
   devServer: {
-    port: 3001,
+    port: 3006,
     contentBase: path.join(__dirname, "dist"),
     historyApiFallback: true,
     headers: {
@@ -39,23 +40,13 @@ const devConfig = {
     // }
   },
   plugins: [
-    // new HtmlWebpackPlugin({
-    //     template: './public/index.html',
-    // }),
     new ModuleFederationPlugin({
-      name: "shell",
+      name: "dashboard",
       filename: "remoteEntry.js",
-      // default is used with 'home@http://localhost:3002/remoteEntry.js'
-      library: { type: "var", name: "shell" },
-      remotes: {
-        nav: "nav",
-        home: "home",
-        about: "about",
-        dashboard: "dashboard",
-        // 'home': 'home@http://localhost:3002/remoteEntry.js'
-        // home: 'home@[window.homeurl]/remoteEntry.js'
+      remotes: {},
+      exposes: {
+        "./DashboardApp": "./src/app",
       },
-      exposes: {},
       shared: {
         react: { singleton: true, eager: true },
         "react-dom": { singleton: true, eager: true },
@@ -68,7 +59,6 @@ const devConfig = {
       },
       // shared: packageJson.dependencies // optional way to list all dependencies as shared
     }),
-    // new ExternalTemplateRemotesPlugin(),
   ],
 };
 

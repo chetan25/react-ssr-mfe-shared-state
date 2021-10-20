@@ -8,10 +8,10 @@ import getRoutes from "./routeConfig";
 
 // to avoid name collision in production, we would prefix class names generated
 const generateClassName = createGenerateClassName({
-  productionPrefix: "homeapp",
+  productionPrefix: "dashboardApp",
 });
 
-const HomeApp = () => {
+const DashboardApp = () => {
   return (
     <div>
       <StylesProvider generateClassName={generateClassName}>
@@ -33,4 +33,4 @@ const HomeApp = () => {
   );
 };
 
-export default HomeApp;
+export default DashboardApp;
