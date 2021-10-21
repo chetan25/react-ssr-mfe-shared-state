@@ -32,6 +32,7 @@ const SideBar = () => {
     const route = globalState.appRoutes[parentRoute].routes[subRoute];
     return route;
   };
+  // throw new Error("Sidebar Page");
 
   return (
     <Paper className={classes.container}>

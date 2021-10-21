@@ -1,6 +1,7 @@
 import React, { lazy } from "react";
 import { Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const SideBar = lazy(() => import("nav/SideBar"));
 const PageHeader = lazy(() => import("nav/PageHeader"));
@@ -42,20 +43,28 @@ const ContainerApp = () => {
   return (
     <div className={classes.container}>
       <div className={classes.header}>
-        <PageHeader />
+        <ErrorBoundary appName="navPageHeader">
+          <PageHeader />
+        </ErrorBoundary>
       </div>
       <nav className={classes.nav}>
         <SideBar />
       </nav>
       <main className={classes.main}>
         <Route exact path="/about">
-          <AboutApp />
+          <ErrorBoundary appName="aboutApp">
+            <AboutApp />
+          </ErrorBoundary>
         </Route>
         <Route path="/home">
-          <HomeApp />
+          <ErrorBoundary appName="homeApp">
+            <HomeApp />
+          </ErrorBoundary>
         </Route>
         <Route path="/dashboard">
-          <DashboardApp />
+          <ErrorBoundary appName="dashboardApp">
+            <DashboardApp />
+          </ErrorBoundary>
         </Route>
       </main>
     </div>

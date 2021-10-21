@@ -9,7 +9,7 @@ import {
   StylesProvider,
   createGenerateClassName,
 } from "@material-ui/core/styles";
-
+import ErrorBoundary from "./components/ErrorBoundary";
 import LoginPage from "./pages/login";
 // import LoginPage from './pages/login-machine';
 import ContainerApp from "./container";
@@ -28,30 +28,32 @@ const ShellApp = () => {
   console.log(globalState, "globalState");
 
   return (
-    <Suspense fallback="loading....">
-      <StylesProvider generateClassName={generateClassName}>
-        <Router>
-          <Switch>
-            <Route exact path="/login" component={LoginPage} />
-            <Route
-              path="/"
-              render={({ location }) =>
-                globalState?.user ? (
-                  <ContainerApp />
-                ) : (
-                  <Redirect
-                    to={{
-                      pathname: "/login",
-                      state: { from: location },
-                    }}
-                  />
-                )
-              }
-            />
-          </Switch>
-        </Router>
-      </StylesProvider>
-    </Suspense>
+    <ErrorBoundary appName="shellApp">
+      <Suspense fallback="loading....">
+        <StylesProvider generateClassName={generateClassName}>
+          <Router>
+            <Switch>
+              <Route exact path="/login" component={LoginPage} />
+              <Route
+                path="/"
+                render={({ location }) =>
+                  globalState?.user ? (
+                    <ContainerApp />
+                  ) : (
+                    <Redirect
+                      to={{
+                        pathname: "/login",
+                        state: { from: location },
+                      }}
+                    />
+                  )
+                }
+              />
+            </Switch>
+          </Router>
+        </StylesProvider>
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 

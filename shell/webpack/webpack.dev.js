@@ -11,8 +11,9 @@ const devConfig = {
   output: {
     filename: "bundle.js",
     publicPath: "http://localhost:3001/",
+    crossOriginLoading: "anonymous",
   },
-  devtool: "source-map",
+  devtool: "cheap-module-source-map",
   devServer: {
     port: 3001,
     contentBase: path.join(__dirname, "dist"),
