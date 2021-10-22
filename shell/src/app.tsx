@@ -20,9 +20,6 @@ const generateClassName = createGenerateClassName({
   productionPrefix: "mrk",
 });
 
-// @ts-ignore
-// window['React'] = React;
-
 const ShellApp = () => {
   const globalState = useGlobalSharedContextValue();
   console.log(globalState, "globalState");

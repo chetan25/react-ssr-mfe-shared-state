@@ -7,6 +7,7 @@ module.exports = {
       filename: "styles.css",
     }),
   ],
+  mode: "production",
   devtool: "cheap-module-source-map",
   module: {
     rules: [

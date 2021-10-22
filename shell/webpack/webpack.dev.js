@@ -6,6 +6,7 @@ const packageJson = require("../package.json");
 const path = require("path");
 // const ExternalTemplateRemotesPlugin = require('./ExternalTemplateRemotesPlugin');
 const webpack = require("webpack");
+
 const devConfig = {
   mode: "development",
   output: {
@@ -58,6 +59,7 @@ const devConfig = {
       },
       exposes: {},
       shared: {
+        ...packageJson.dependencies,
         react: { singleton: true, eager: true },
         "react-dom": { singleton: true, eager: true },
         "react-router-dom": { singleton: true, eager: true },

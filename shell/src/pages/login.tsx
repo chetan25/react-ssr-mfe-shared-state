@@ -38,7 +38,7 @@ const LoginPage = () => {
       return;
     }
     handleSubmit("/login", () => {
-      history.push("/dashboard");
+      history.push("/home");
     });
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   useGlobalSharedContextUpdate,
   useGlobalSharedContextValue,
@@ -10,54 +10,72 @@ const RegisterRoutes = () => {
 
   useEffect(() => {
     const init = async () => {
-      setGlobalState({
-        ...globalState,
-        appRoutes: {
-          home: {},
-          about: {},
-        },
-      });
+      console.log(globalState, "RegisterRoutes");
       // configure routes for remotes
-      const homeRoutePath = globalState.remoteJs.home;
-
-      // @ts-ignore
-      await import(
-        /* webpackIgnore: true */ `${homeRoutePath}/homeAppRoutes.js`
-      ).then(() => {
-        console.log("downloaded routes for home");
+      const availableRemotes = Object.keys(globalState.remoteJs).filter(
+        (remote) => remote !== "nav" // since nav have no routes
+      );
+      // loop and register routes
+      const allRoutes = {};
+      const promises = availableRemotes.map(async (route) => {
+        const path = globalState.remoteJs[route];
+        // @ts-ignore
+        return await import(/* webpackIgnore: true */ `${path}/routes.js`).then(
+          () => {
+            console.log(`downloaded routes for ${route}`);
+            // @ts-ignore
+            allRoutes[route] = window[route];
+          }
+        );
       });
-
-      const aboutRoutePath = globalState.remoteJs.about;
-      // @ts-ignore
-      await import(
-        /* webpackIgnore: true */ `${aboutRoutePath}/aboutAppRoutes.js`
-      ).then(() => {
-        console.log("downloaded routes for about");
-      });
-
-      const dashboardRoutePath = globalState.remoteJs.dashboard;
-      // @ts-ignore
-      await import(
-        /* webpackIgnore: true */ `${dashboardRoutePath}/dashboardAppRoutes.js`
-      ).then(() => {
-        console.log("downloaded routes for dashboard");
-      });
+      await Promise.all(promises);
 
       setGlobalState({
         ...globalState,
-        appRoutes: {
-          ...globalState.appRoutes,
-          // @ts-ignore
-          home: window["homeAppRoutes"],
-          // @ts-ignore
-          about: window["aboutAppRoutes"],
-          // @ts-ignore
-          dashboard: window["dashboardAppRoutes"],
-        },
+        appRoutes: allRoutes,
       });
+
+      // const homeRoutePath = globalState.remoteJs.home;
+      // // @ts-ignore
+      // await import(/* webpackIgnore: true */ `${homeRoutePath}/routes.js`).then(
+      //   () => {
+      //     console.log("downloaded routes for home");
+      //   }
+      // );
+
+      // const aboutRoutePath = globalState.remoteJs.about;
+      // // @ts-ignore
+      // await import(
+      //   /* webpackIgnore: true */ `${aboutRoutePath}/routes.js`
+      // ).then(() => {
+      //   console.log("downloaded routes for about");
+      // });
+
+      // const dashboardRoutePath = globalState.remoteJs.dashboard;
+      // // @ts-ignore
+      // await import(
+      //   /* webpackIgnore: true */ `${dashboardRoutePath}/routes.js`
+      // ).then(() => {
+      //   console.log("downloaded routes for dashboard");
+      // });
+
+      // setGlobalState({
+      //   ...globalState,
+      //   appRoutes: {
+      //     ...globalState.appRoutes,
+      //     // @ts-ignore
+      //     home: window["homeAppRoutes"],
+      //     // @ts-ignore
+      //     about: window["aboutAppRoutes"],
+      //     // @ts-ignore
+      //     dashboard: window["dashboardAppRoutes"],
+      //   },
+      // });
     };
 
-    init();
+    if (Object.keys(globalState.appRoutes.home).length <= 0) {
+      init();
+    }
   }, []);
 
   return null;

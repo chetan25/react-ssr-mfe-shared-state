@@ -1,6 +1,6 @@
-window["dashboardAppRoutes"] = {
+window["dashboard"] = {
   app: "dashboard",
   routes: {
-    about: "/dashboard",
+    dashboard: "/dashboard",
   },
 };

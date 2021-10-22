@@ -8,7 +8,7 @@ const devConfig = {
   mode: "development",
   entry: {
     main: "./src/index.js", // no use for us
-    aboutAppRoutes: "./src/exposeRoutes.js",
+    routes: "./src/exposeRoutes.js",
   },
   output: {
     publicPath: "http://localhost:3005/",
@@ -48,6 +48,7 @@ const devConfig = {
         "./AboutApp": "./src/app",
       },
       shared: {
+        ...packageJson.dependencies,
         react: { singleton: true, eager: true },
         "react-dom": { singleton: true, eager: true },
         "react-router-dom": { singleton: true, eager: true },

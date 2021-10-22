@@ -4,6 +4,7 @@ const baseConfig = require("./webpack.base");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const packageJson = require("../package.json");
 const path = require("path");
+
 const devConfig = {
   mode: "development",
   entry: {
@@ -51,6 +52,7 @@ const devConfig = {
         "./SideBar": "./src/side-bar",
       },
       shared: {
+        ...packageJson.dependencies,
         react: { singleton: true, eager: true },
         "react-dom": { singleton: true, eager: true },
         "react-router-dom": { singleton: true, eager: true },
