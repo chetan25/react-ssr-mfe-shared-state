@@ -55,6 +55,8 @@ This is a simple Express server that serves following purpose:
 - This is a simple library that exposes a simple Shared Context.
 - This Shared context serves as root level context to share state between different micro apps.
 
+Note - To install the Shared lib in every package, run `npm pack` in the Shared State library and than take that tar file and install it as a normal dep in other sub apps.
+
 ## Gotchas
 
 #### Sharing Shared State library
