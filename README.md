@@ -1,7 +1,7 @@
 ---
 title: Simple MFE apps with shared state and static routing logic.
 excerpt: Build simple MFE that shares global state along with route info within all MFEs.
-Tools: ['Express', 'React', 'Redux', 'ReactDOM' 'Webpack', 'XSTate', 'SSR']
+Tools: ["Express", "React", "Redux", "ReactDOM", "Webpack", "XSTate", "SSR"]
 ---
 
 ## Mono Repo Structure
